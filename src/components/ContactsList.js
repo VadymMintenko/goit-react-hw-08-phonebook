@@ -2,11 +2,13 @@
 import { nanoid } from 'nanoid';
 import { ListContacts, ListItem, DeleteButton } from './ContactsForm.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectVisibleContacts } from 'Redax/selectors';
-import { deleteContacts } from '../Redax/operations';
-import { setFilter } from 'Redax/filterSlice';
+import { selectVisibleContacts } from 'Redax/contacts/selectors';
+import { deleteContacts } from '../Redax/contacts/operations';
+import { setFilter } from 'Redax/contacts/filterSlice';
+import ContactsForm from './ContactsForm';
+import Filter from './Filter';
 
-export const ContactsList = () => {
+const ContactsList = () => {
   const contacts = useSelector(selectVisibleContacts);
 
   const dispatch = useDispatch();
@@ -19,6 +21,7 @@ export const ContactsList = () => {
   return (
     <>
       {' '}
+      <ContactsForm />
       <ListContacts>
         {contacts.map(element => {
           return (
@@ -32,7 +35,7 @@ export const ContactsList = () => {
           );
         })}
       </ListContacts>
-      <p></p>
+      <Filter />
     </>
   );
 };
@@ -49,3 +52,5 @@ export const ContactsList = () => {
 
 //   onDeleteContact: PropTypes.func.isRequired,
 // };
+
+export default ContactsList;

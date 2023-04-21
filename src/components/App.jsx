@@ -1,43 +1,28 @@
-import { ContactsList } from './ContactsList';
-import { ContactsForm } from './ContactsForm';
-import { Filter } from './Filter';
-import { nanoid } from 'nanoid';
-import { Container, ContactsListSContainer } from './ContactsForm.styled';
-import { useSelector, useDispatch } from 'react-redux';
-import { getContacts } from 'Redax/selectors';
-import { addContacts, fetchContacts } from '../Redax/operations';
-import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { lazy, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchContacts } from '../Redax/contacts/operations';
+
+const Layout = lazy(() => import('../Layout'));
+const RegistrationForm = lazy(() => import('./RegistrationForm'));
+const AutorizationForm = lazy(() => import('./AutorazationForm'));
+const UserMenu = lazy(() => import('./UserMenu'));
+const Home = lazy(() => import('../pages/Home'));
 
 export const App = () => {
-  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const handleSubmit = (values, { resetForm }) => {
-    const newContact = {
-      id: nanoid(),
-      name: values.name,
-      number: values.number,
-    };
-    if (contacts.map(contact => contact.name).includes(newContact.name)) {
-      alert(`Contact ${newContact.name} already exists.`);
-      return;
-    }
-    dispatch(addContacts(values));
-    resetForm();
-  };
-
   return (
-    <Container>
-      <ContactsListSContainer>
-        <ContactsForm handleSubmit={handleSubmit} />
-
-        <ContactsList contacts={contacts} />
-
-        <Filter />
-      </ContactsListSContainer>
-    </Container>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="registration" element={<RegistrationForm />} />
+        <Route path="signIn" element={<AutorizationForm />} />
+        <Route path="user" element={<UserMenu />} />
+      </Route>
+    </Routes>
   );
 };

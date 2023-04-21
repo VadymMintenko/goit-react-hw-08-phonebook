@@ -1,11 +1,10 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getFilter } from 'Redax/contacts/selectors';
+import { setFilter } from 'Redax/contacts/filterSlice';
 
-import { useDispatch } from 'react-redux';
-import { getFilter } from 'Redax/selectors';
-import { setFilter } from 'Redax/filterSlice';
-export const Filter = () => {
+const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(getFilter);
   const searchContact = evt => {
@@ -31,3 +30,5 @@ export const Filter = () => {
 //   filter: PropTypes.string.isRequired,
 //   searchContact: PropTypes.func.isRequired,
 // };
+
+export default Filter;

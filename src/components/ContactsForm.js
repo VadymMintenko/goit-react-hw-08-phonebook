@@ -1,16 +1,37 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { FormFild } from './ContactsForm.styled';
+import { addContacts } from '../Redax/contacts/operations';
+import { nanoid } from 'nanoid';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from 'Redax/contacts/selectors';
 
 let schema = object({
   name: string().required(),
 });
 
-export const ContactsForm = ({ handleSubmit }) => {
+const ContactsForm = () => {
   const initialValue = {
     name: '',
     number: '',
+  };
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
+  const handleSubmit = (values, { resetForm }) => {
+    const newContact = {
+      id: nanoid(),
+      name: values.name,
+      number: values.number,
+    };
+    if (contacts.map(contact => contact.name).includes(newContact.name)) {
+      alert(`Contact ${newContact.name} already exists.`);
+      return;
+    }
+    dispatch(addContacts(values));
+    resetForm();
   };
 
   return (
@@ -50,6 +71,8 @@ export const ContactsForm = ({ handleSubmit }) => {
   );
 };
 
-ContactsForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-};
+// ContactsForm.propTypes = {
+//   handleSubmit: PropTypes.func.isRequired,
+// };
+
+export default ContactsForm;
