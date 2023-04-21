@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_homework_template=self.webpackChunkreact_homework_template||[]).push([[266],{1266:function(e,t,r){r.r(t);var n=r(1087),a=r(184);t.default=function(){return(0,a.jsxs)(a.Fragment,{children:["In order to use the application, you need to"," ",(0,a.jsxs)("span",{children:[" ",(0,a.jsx)(n.OL,{to:"/registration",children:"Registration"})]}),"!"]})}}}]);
+//# sourceMappingURL=266.d3c29900.chunk.js.map
