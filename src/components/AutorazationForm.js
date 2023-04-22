@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { logIn } from 'Redax/auth/auth-operations';
 
 const AutorizationForm = () => {
@@ -46,6 +47,7 @@ const AutorizationForm = () => {
         />
       </label>
       <button type="submit">Увійти</button>
+      <Link to="/registration">Зареєструватись</Link>
     </form>
   );
 };

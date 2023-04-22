@@ -1,28 +1,48 @@
 import { Routes, Route } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchContacts } from '../Redax/contacts/operations';
+import { fetchCurrentUser } from 'Redax/auth/auth-operations';
+import { RestrictedRoute } from './RestrictedRout';
+import { Suspense } from 'react';
 
 const Layout = lazy(() => import('../Layout'));
-const RegistrationForm = lazy(() => import('./RegistrationForm'));
-const AutorizationForm = lazy(() => import('./AutorazationForm'));
-const UserMenu = lazy(() => import('./UserMenu'));
 const Home = lazy(() => import('../pages/Home'));
+const Registration = lazy(() => import('./RegistrationForm'));
+const Autorization = lazy(() => import('./AutorazationForm'));
+const ContactsList = lazy(() => import('./ContactsList'));
 
 export const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(fetchCurrentUser());
   }, [dispatch]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="registration" element={<RegistrationForm />} />
-        <Route path="signIn" element={<AutorizationForm />} />
-        <Route path="user" element={<UserMenu />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<></>}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route
+            path="/registration"
+            element={
+              <RestrictedRoute
+                component={Registration}
+                redirectTo="/contacts"
+              />
+            }
+          />
+          <Route
+            path="/signIn"
+            element={
+              <RestrictedRoute
+                component={Autorization}
+                redirectTo="/contacts"
+              />
+            }
+          />
+          <Route path="/contacts" element={<ContactsList />} />;
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };

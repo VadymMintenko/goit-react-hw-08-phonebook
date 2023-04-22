@@ -1,14 +1,14 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
     <>
-      In order to use the application, you need to{' '}
-      <span>
-        {' '}
-        <NavLink to="/registration">Registration</NavLink>
-      </span>
-      !
+      <h2>
+        Для того що користуватись сервісом, вам потрібно{' '}
+        <span>
+          <Link to="signIn">авторизуватись</Link>
+        </span>
+      </h2>
     </>
   );
 };
