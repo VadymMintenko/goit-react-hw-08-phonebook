@@ -7,6 +7,8 @@ import { deleteContacts } from '../Redax/contacts/operations';
 import { setFilter } from 'Redax/contacts/filterSlice';
 import ContactsForm from './ContactsForm';
 import Filter from './Filter';
+import { useEffect } from 'react';
+import { fetchContacts } from '../Redax/contacts/operations';
 
 const ContactsList = () => {
   const contacts = useSelector(selectVisibleContacts);
@@ -17,6 +19,9 @@ const ContactsList = () => {
     dispatch(deleteContacts(contactId));
     dispatch(setFilter(''));
   };
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <>

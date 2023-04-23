@@ -10,6 +10,4 @@ const authSelector = {
   getIsRefreshing,
 };
 
-console.log(authSelector.getUsername);
-
 export default authSelector;
